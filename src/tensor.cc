@@ -523,13 +523,13 @@ std::ostream &operator<<(std::ostream &stream, Tensor &matrix) {
 }
 
 Tensor operator+(Tensor &src, Tensor const &second) {
-  CHECK(src.shape == second.shape,
+  DCHECK(src.shape == second.shape,
         "tensor shapes are not same can not perform calculation!");
   return src;
 }
 
 Tensor operator*(Tensor &src, Tensor const &second) {
-  CHECK(src.shape == second.shape,
+  DCHECK(src.shape == second.shape,
         "tensor shapes are not same can not perform calculation!");
   return src;
 }
@@ -564,11 +564,11 @@ std::size_t Tensor::compute_index(const std::vector<size_t> &indexes) {
   size_t index = 0;
   size_t mul = 1;
   for (int i = shape.size(); i != 0; --i) {
-    CHECK((int)indexes[i - 1] < shape[i - 1], "dims shapes not right!");
+    DCHECK((int)indexes[i - 1] < shape[i - 1], "dims shapes not right!");
     index += indexes[i - 1] * mul;
     mul *= shape[i - 1];
   }
-  CHECK(index < get_size(), "index calculated out of bounds");
+  DCHECK(index < get_size(), "index calculated out of bounds");
   return index;
 }
 
@@ -607,8 +607,8 @@ void Tensor::from_pixels(const unsigned char *pixels,
    printf("[err] dims not correct, must be 3 or 4!\n");
   }
 
-  CHECK(batch == 1, "currently from_pixels only support one batch!");
-  CHECK(permute_type == PermuteType::PERMUTE_HWC2CHW,
+  DCHECK(batch == 1, "currently from_pixels only support one batch!");
+  DCHECK(permute_type == PermuteType::PERMUTE_HWC2CHW,
         "currently from_pixels only support one PERMUTE_HWC2CHW!");
 
   auto stride = w * channel;
@@ -991,11 +991,11 @@ void check_nan(Tensor &src) {
 }
 
 void argmax(Tensor &src, float &value, size_t &index) {
-  CHECK(src.shape.size() == 1, "argmax only support tensor dim == 1.");
+  DCHECK(src.shape.size() == 1, "argmax only support tensor dim == 1.");
 }
 void argmax(Tensor &src, std::vector<float> &values,
             std::vector<size_t> &indexes) {
-  CHECK(src.shape.size() == 2, "argmax only support tensor dim == 2.");
+  DCHECK(src.shape.size() == 2, "argmax only support tensor dim == 2.");
   float *ptr = (float *)src.data;
   for (int i = 0; i < src.shape[0]; ++i) {
     auto start = ptr + i * src.shape[1];

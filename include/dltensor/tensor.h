@@ -16,7 +16,7 @@ namespace wnn {
 #define WNN_NEVER_INLINE __attribute__((noinline))
 #endif
 
-#define CHECK(x, msg)                                                               \
+#define DCHECK(x, msg)                                                               \
   if (!(x))                                                                    \
   printf("Check failed: %s, %s", #x, msg) // NOLINT(*)
 
@@ -303,7 +303,7 @@ protected:
 
 public:
   float operator[](int i) {
-    CHECK(i <= (int)strides[0], "i out of bounds strides");
+    DCHECK(i <= (int)strides[0], "i out of bounds strides");
     return ((float *)data)[i];
   }
   friend std::ostream &operator<<(std::ostream &stream, Tensor &matrix);
