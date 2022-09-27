@@ -1,0 +1,8 @@
+build/
+vendor/
+weights/
+vendor2/
+.vscode/
+build/
+vendor/
+.cache/
