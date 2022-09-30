@@ -84,8 +84,6 @@ enum Device : int {
   kCPU = 10,
 };
 
-enum BackendType : int { Backend_CPU = 0, Backend_CoreML, Backend_TensorRT };
-
 inline std::string dtype_to_str(DType dt) {
   switch (dt) {
   case DT_FLOAT: {
@@ -103,6 +101,35 @@ inline std::string dtype_to_str(DType dt) {
   default: {
     return "float";
   }
+  }
+}
+
+inline void *mm_malloc(size_t sz, size_t align) {
+  void *ptr;
+#ifdef _WIN32
+  ptr = _aligned_malloc(sz, align);
+  if (!ptr) {
+    LOG(INFO) << "_mm_malloc failed, errno = " << errno;
+    return NULL;
+  }
+#else
+  int alloc_result = posix_memalign(&ptr, align, sz);
+  if (alloc_result != 0) {
+    return nullptr;
+  }
+#endif
+
+  return ptr;
+}
+
+inline void mm_free(void *ptr) {
+  if (nullptr != ptr) {
+#ifdef _WIN32
+    _aligned_free(ptr);
+#else
+    free(ptr);
+#endif
+    ptr = nullptr;
   }
 }
 

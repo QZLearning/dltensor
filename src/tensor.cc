@@ -27,35 +27,6 @@
 
 namespace wnn {
 
-void *mm_malloc(size_t sz, size_t align) {
-  void *ptr;
-#ifdef TCNN_PLATFORM_WINDOWS
-  ptr = _aligned_malloc(sz, align);
-  if (!ptr) {
-    LOG(INFO) << "_mm_malloc failed, errno = " << errno;
-    return NULL;
-  }
-#else
-  int alloc_result = posix_memalign(&ptr, align, sz);
-  if (alloc_result != 0) {
-    return nullptr;
-  }
-#endif
-
-  return ptr;
-}
-
-void mm_free(void *ptr) {
-  if (nullptr != ptr) {
-#ifdef TCNN_PLATFORM_WINDOWS
-    _aligned_free(ptr);
-#else
-    free(ptr);
-#endif
-    ptr = nullptr;
-  }
-}
-
 ///// DataTypeInfo
 std::vector<DataTypeInfo *> &GetDtype2Info() {
   static std::vector<DataTypeInfo *> dtype2info((int)DT_MAX);
