@@ -16,7 +16,7 @@ namespace wnn {
 #define WNN_NEVER_INLINE __attribute__((noinline))
 #endif
 
-#define DCHECK(x, msg)                                                               \
+#define DCHECK(x, msg)                                                         \
   if (!(x))                                                                    \
   printf("Check failed: %s, %s", #x, msg) // NOLINT(*)
 
@@ -268,6 +268,9 @@ public:
   }
   inline std::vector<int> vec() const {
     return std::vector<int>(dims, dims + m_size);
+  }
+  inline std::vector<size_t> vec_l() const {
+    return std::vector<size_t>(dims, dims + m_size);
   }
   inline int &operator[](int i) {
     if (i < 0)
