@@ -15,3 +15,4 @@ include_directories(include/)
 set(SRCS include/dltensor/builtin_fp16.h include/dltensor/tensor.h src/tensor.cc)
 
 add_library(dltensor STATIC ${SRCS})
+SET_TARGET_PROPERTIES(dltensor PROPERTIES LINK_FLAGS "-Wl,--gc-sections")

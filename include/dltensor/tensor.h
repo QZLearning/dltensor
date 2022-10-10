@@ -272,7 +272,7 @@ public:
   inline std::vector<size_t> vec_l() const {
     return std::vector<size_t>(dims, dims + m_size);
   }
-  inline size_t getstrides(int i) const {
+  inline size_t getstrides(size_t i) const {
     if (i > m_size)
       i = m_size;
     size_t stride = 1;
