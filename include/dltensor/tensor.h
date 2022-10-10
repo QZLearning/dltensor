@@ -272,6 +272,15 @@ public:
   inline std::vector<size_t> vec_l() const {
     return std::vector<size_t>(dims, dims + m_size);
   }
+  inline size_t getstrides(int i) const {
+    if (i > m_size)
+      i = m_size;
+    size_t stride = 1;
+    for (size_t ii = i; ii < m_size; ++ii) {
+      stride *= getdim(ii);
+    }
+    return stride;
+  }
   inline int &operator[](int i) {
     if (i < 0)
       i = size() + i;
