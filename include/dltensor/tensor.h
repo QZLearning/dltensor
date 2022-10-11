@@ -111,7 +111,8 @@ inline std::string dtype_to_str(DType dt) {
 inline void *mm_malloc(size_t sz, size_t align) {
   void *ptr;
 #ifdef _WIN32
-  ptr = _aligned_malloc(sz, align);
+  ptr = _mm_malloc(sz, align);
+  // ptr = aligned_alloc(sz, align);
   if (!ptr) {
     printf("_mm_malloc failed, errno = %s ", errno);
     return NULL;
@@ -129,7 +130,7 @@ inline void *mm_malloc(size_t sz, size_t align) {
 inline void mm_free(void *ptr) {
   if (nullptr != ptr) {
 #ifdef _WIN32
-    _aligned_free(ptr);
+    _mm_free(ptr);
 #else
     free(ptr);
 #endif
