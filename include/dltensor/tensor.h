@@ -5,6 +5,7 @@
 // #include <ostream>
 #include <string>
 #include <vector>
+#include <malloc.h>
 
 namespace wnn {
 
@@ -109,7 +110,7 @@ inline void *mm_malloc(size_t sz, size_t align) {
 #ifdef _WIN32
   ptr = _aligned_malloc(sz, align);
   if (!ptr) {
-    LOG(INFO) << "_mm_malloc failed, errno = " << errno;
+    printf("_mm_malloc failed, errno = %s ", errno);
     return NULL;
   }
 #else
