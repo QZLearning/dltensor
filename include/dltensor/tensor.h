@@ -5,7 +5,10 @@
 // #include <ostream>
 #include <string>
 #include <vector>
+
+#ifdef _WIN32
 #include <malloc.h>
+#endif
 
 namespace wnn {
 
